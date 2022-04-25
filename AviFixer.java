@@ -29,7 +29,7 @@ public static boolean checkForDivX(File file){
         StringBuffer sb = new StringBuffer();
         int count = 0;
         for (int X : arr) {
-
+ 
             sb.append((char) X);
             if (count == 0 && ((char) X == 'X' || (char) X == 'x')) {
                 count++;
@@ -73,7 +73,7 @@ public static void getFiles(File[] files) {
         } else {
             if (file.getName().endsWith("avi")) {
                 if (checkForDivX(file)) {
-                    System.out.println(file.getName());
+                    System.out.println(file.getAbsolutePath());
                    
                 }
             }
