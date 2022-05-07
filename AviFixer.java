@@ -10,7 +10,7 @@ import java.util.*;
 public class AviFixer {
     private static HashSet<String> hs = new HashSet<>();
     public static void main(String... args) {
-        File[] files = new File("E:").listFiles();
+        File[] files = new File("D:/media backup").listFiles();
         if (files != null)
             try {
                 getFiles(files);
@@ -37,9 +37,8 @@ public class AviFixer {
             // read All bytes of File stream
             fileStream.read(arr, 0, arr.length);
 
-            String format = new String(arr);
-            format = format.substring(112, 116);
-
+            String format = new String(arr).substring(112, 116);
+        
             if (format.equalsIgnoreCase("divx") || format.equalsIgnoreCase("xvid")) {
                 return true;
             }
