@@ -22,7 +22,7 @@ public class AviFixer {
         Scanner sc = new Scanner(System.in); // System.in is a standard input stream.
         System.out.print("Enter the full path for the root directory: ");
 
-        String rootPath = sc.nextLine(); // reads string before the space.
+        String rootPath = sc.nextLine(); 
         System.out.println(rootPath);
         sc.close();
 
