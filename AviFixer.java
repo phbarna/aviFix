@@ -43,12 +43,18 @@ public class AviFixer {
         File[] files = new File(rootPath).listFiles();
         if (files != null)
             try {
-                getFiles(files);
+                processFiles(files);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
     }
 
+    /**
+     * Checks to see if the file contains xvid or divx 
+     * @param file the file to check
+     * @return true if it is an xvid or divx
+     * @throws IOException
+     */
     public static boolean checkForDivX(File file) throws IOException {
 
         // getBytes from anyWhere
@@ -78,11 +84,14 @@ public class AviFixer {
         } finally {
             fileStream.close();
         }
-        fileStream.close();
         return false;
     }
 
-    public static void getFiles(File[] files) {
+    /**
+     * Processes files from the current directory - method can be recursively called as it drills down through directory structure
+     * @param files - list of files and directories (called from current directory)
+     */
+    public static void processFiles(File[] files) {
         try {
             if (files == null) {
                 return;
@@ -90,7 +99,7 @@ public class AviFixer {
             for (File file : files) {
 
                 if (file.isDirectory()) {
-                    getFiles(file.listFiles());
+                    processFiles(file.listFiles());
                 } else {
                     if (file.getName().endsWith("avi")) {
                         if (checkForDivX(file)) {
