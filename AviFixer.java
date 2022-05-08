@@ -8,18 +8,44 @@ import java.util.Arrays;
 import java.util.*;
 
 public class AviFixer {
-    private static HashSet<String> hs = new HashSet<>();
+
     public static void main(String... args) {
-        File[] files = new File("D:/media backup").listFiles();
+        if (args.length == 1) {
+            String arg = args[0].toLowerCase();
+            if (arg.contains("h") || args.equals("info")) {
+                System.out.println("This program will convert all your old DIVX or XVID to mp4 format.");
+                System.out.println("It can take a while to run (depending on how many files need processing).");
+                System.out.println(".... because some newer tvs won't play video encoded with divx/xvid codec.");
+                System.exit(0);
+            }
+        }
+        Scanner sc = new Scanner(System.in); // System.in is a standard input stream.
+        System.out.print("Enter the full path for the root directory: ");
+
+        String rootPath = sc.nextLine(); // reads string before the space.
+        System.out.println(rootPath);
+        sc.close();
+
+        File rootPathFile = new File(rootPath);
+        if (!rootPathFile.exists()) {
+            System.out.println("The path " + rootPath + " does not exist.");
+            System.out.println("Example of the correct format is: D:/media backup");
+            System.exit(0);
+        }
+
+        System.out.println("Processing from " + rootPath + " This could take a while.");
+        System.out.println("");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        File[] files = new File(rootPath).listFiles();
         if (files != null)
             try {
                 getFiles(files);
             } catch (Exception ex) {
                 ex.printStackTrace();
-            }
-            System.out.println(hs.size());
-            for (String s : hs) {
-                System.out.println(s);
             }
     }
 
@@ -38,7 +64,7 @@ public class AviFixer {
             fileStream.read(arr, 0, arr.length);
 
             String format = new String(arr).substring(112, 116);
-        
+
             if (format.equalsIgnoreCase("divx") || format.equalsIgnoreCase("xvid")) {
                 return true;
             }
@@ -57,32 +83,36 @@ public class AviFixer {
     }
 
     public static void getFiles(File[] files) {
-    try {
-        if (files == null) {
-            return;
-        }
-        for (File file : files) {
+        try {
+            if (files == null) {
+                return;
+            }
+            for (File file : files) {
 
-            if (file.isDirectory()) {
-                getFiles(file.listFiles());
-            } else {
-                if (file.getName().endsWith("avi")) {
-                    if (checkForDivX(file)) {
+                if (file.isDirectory()) {
+                    getFiles(file.listFiles());
+                } else {
+                    if (file.getName().endsWith("avi")) {
+                        if (checkForDivX(file)) {
 
-                        String s = file.getAbsolutePath();
-                        int index = s.lastIndexOf("\\");
-                        String folder = s.substring(0, index);
-                        hs.add(folder);
+                            String s = file.getAbsolutePath();
 
+                            Convert c = new Convert();
+                            c.execute(s);
+
+                            File fileToDelete = new File(s);
+                            if (!fileToDelete.delete()) {
+                                System.err.println("Cannot delete " + s);
+                            }
+
+                        }
                     }
                 }
             }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    }
-
 
     }
 }
