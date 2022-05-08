@@ -7,4 +7,4 @@ This program prompts you to enter a 'root' folder (i.e. where all your media fil
 
 The files are recursively converted to .mp4.  
 
-Note that the ffmpeg program has to be installed and in your path. This may be a good reason to dockerize the program at some point.
+Note that the program needs a dependency - the ffmpeg .exe has to be installed and in your path. This would be a good reason to dockerize the program at some point.
