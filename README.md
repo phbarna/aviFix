@@ -7,4 +7,8 @@ This program prompts you to enter a 'root' folder (i.e. where all your media fil
 
 The files are recursively converted to .mp4.  
 
-Note that the program needs a dependency - the ffmpeg .exe has to be installed and in your path. This would be a good reason to dockerize the program at some point.
+To build type: 'javac AviFix.java"
+
+To create an executable jar file type: 'jar example.jar MANIFEST.MF *.class'.  
+
+iNote that the program needs a dependency - the ffmpeg .exe has to be installed and in your path. This would be a good reason to dockerize the program at some point.
